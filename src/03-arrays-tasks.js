@@ -438,13 +438,10 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]
  */
 function getIdentityMatrix(n) {
-  return Array(n)
-    .fill(0)
-    .map((row, i) =>
-      Array(n)
-        .fill(0)
-        .map((cell, j) => (i === j ? 1 : 0))
-    );
+  const nSizeArray = Array.from({ length: n }, (_, i) =>
+    Array.from({ length: n }, (_, j) => (i === j ? 1 : 0))
+  );
+  return nSizeArray;
 }
 
 /**
