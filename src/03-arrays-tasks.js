@@ -281,8 +281,8 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 1,2,3,4,5,6,7,8,9,10 ] => [ 10, 9, 8 ]
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
-function get3TopItems(/* arr */) {
-  throw new Error('Not implemented');
+function get3TopItems(arr) {
+  return arr.sort((a, b) => b - a).slice(0, 3);
 }
 
 /**
@@ -298,8 +298,8 @@ function get3TopItems(/* arr */) {
  *   [ null, 1, 'elephant' ] => 1
  *   [ 1, '2' ] => 1
  */
-function getPositivesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getPositivesCount(arr) {
+  return arr.filter((num) => typeof num === 'number' && num > 0).length;
 }
 
 /**
@@ -315,14 +315,27 @@ function getPositivesCount(/* arr */) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const digitValues = {
+    zero: 0,
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5,
+    six: 6,
+    seven: 7,
+    eight: 8,
+    nine: 9,
+  };
+
+  return arr.sort((a, b) => digitValues[a] - digitValues[b]);
 }
 
 /**
  * Returns the sum of all items in the specified array of numbers
  *
- * @param {array} arr
+ * @param {array} group
  * @return {number}
  *
  * @example
@@ -437,9 +450,7 @@ function sortCitiesArray(arr) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
 //  */
-function getIdentityMatrix() {
-  throw new Error('Not implemented');
-}
+
 // function getIdentityMatrix(n) {
 //   return Array(n)
 //     .fill(0)
@@ -512,8 +523,22 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const resultMap = new Map();
+
+  for (let i = 0; i < array.length; i += 1) {
+    const item = array[i];
+    const key = keySelector(item);
+    const value = valueSelector(item);
+
+    if (resultMap.has(key)) {
+      resultMap.get(key).push(value);
+    } else {
+      resultMap.set(key, [value]);
+    }
+  }
+
+  return resultMap;
 }
 
 /**
@@ -567,8 +592,18 @@ function getElementByIndexes(arr, indexes) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length <= 1) {
+    return arr.slice();
+  }
+
+  const middleIndex = Math.floor(arr.length / 2);
+  const head = arr.slice(0, middleIndex);
+  const tail = arr.slice(middleIndex + (arr.length % 2));
+  if (arr.length % 2 === 0) {
+    return tail.concat(head);
+  }
+  return tail.concat(arr[middleIndex], head);
 }
 
 module.exports = {
@@ -596,7 +631,7 @@ module.exports = {
   getFalsyValuesCount,
   findAllOccurrences,
   sortCitiesArray,
-  getIdentityMatrix,
+  // getIdentityMatrix,
   getIntervalArray,
   distinct,
   group,
