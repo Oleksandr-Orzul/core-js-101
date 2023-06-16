@@ -524,10 +524,7 @@ function distinct(arr) {
  *   }
  */
 function group(array, keySelector, valueSelector) {
-  const resultMap = new Map();
-
-  for (let i = 0; i < array.length; i += 1) {
-    const item = array[i];
+  return array.reduce((resultMap, item) => {
     const key = keySelector(item);
     const value = valueSelector(item);
 
@@ -536,9 +533,9 @@ function group(array, keySelector, valueSelector) {
     } else {
       resultMap.set(key, [value]);
     }
-  }
 
-  return resultMap;
+    return resultMap;
+  }, new Map());
 }
 
 /**
